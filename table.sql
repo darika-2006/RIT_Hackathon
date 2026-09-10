@@ -1,15 +1,4 @@
--- ============================================================
--- BANK DATABASE SIMULATION — SCHEMA
--- Hackathon Project
--- PostgreSQL 13+
--- ============================================================
-
 CREATE EXTENSION IF NOT EXISTS pgcrypto;  -- for gen_random_uuid()
-
--- ============================================================
--- 1. AUTH / USER
--- ============================================================
-
 CREATE TABLE customers (
     customer_id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     full_name           VARCHAR(150) NOT NULL,
