@@ -1,7 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 from database import pool
+from tts_service import synthesize_speech
 
 
 app = FastAPI(
@@ -511,3 +513,25 @@ def get_benefits(customer_id: str):
                 }
                 for row in rows
             ]
+
+
+# --------------------------------------------------
+# TEXT-TO-SPEECH (TTS) - 14 INDIC LANGUAGES
+# --------------------------------------------------
+
+class TTSRequest(BaseModel):
+    text: str
+    language: str = "hi"
+
+
+@app.post("/api/tts/synthesize")
+@app.post("/api/speak")
+async def tts_endpoint(req: TTSRequest):
+    if not req.text or not req.text.strip():
+        raise HTTPException(status_code=400, detail="Text cannot be empty")
+
+    try:
+        audio_bytes, media_type = await synthesize_speech(req.text, req.language)
+        return Response(content=audio_bytes, media_type=media_type)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
