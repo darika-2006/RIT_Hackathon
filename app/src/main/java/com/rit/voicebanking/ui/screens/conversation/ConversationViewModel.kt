@@ -16,6 +16,11 @@ import com.rit.voicebanking.domain.usecase.CancelUseCase
 import com.rit.voicebanking.domain.usecase.ConfirmUseCase
 import com.rit.voicebanking.domain.usecase.SendTextUseCase
 import com.rit.voicebanking.domain.usecase.SendVoiceUseCase
+import com.rit.voicebanking.data.remote.NetworkClient
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -125,9 +130,33 @@ class ConversationViewModel(
         viewModelScope.launch {
             try {
                 _uiState.value = ConversationUiState.Processing
-                val response = sendVoiceUseCase(audioFile, currentSessionId, _selectedLanguage.value)
-                audioFile.delete() // clean up temp file
-                handleResponse(response, inputText = "[Voice input]")
+
+                // Transcribe audio using the Vernacular ASR Engine
+                val transcribedText = try {
+                    val filePart = MultipartBody.Part.createFormData(
+                        name = "file",
+                        filename = audioFile.name,
+                        body = audioFile.asRequestBody("audio/mp4".toMediaType())
+                    )
+                    val langPart = _selectedLanguage.value.code.toRequestBody("text/plain".toMediaType())
+                    val sessionPart = currentSessionId.toRequestBody("text/plain".toMediaType())
+                    val asrRes = NetworkClient.asrApiService.transcribeAudio(filePart, langPart, sessionPart)
+                    asrRes.text.trim()
+                } catch (e: Exception) {
+                    Log.w("ConversationVM", "ASR transcription failed: ${e.message}")
+                    null
+                }
+
+                if (!transcribedText.isNullOrBlank()) {
+                    addUserMessage(transcribedText)
+                    val response = sendTextUseCase(transcribedText, currentSessionId, _selectedLanguage.value)
+                    audioFile.delete()
+                    handleResponse(response, inputText = transcribedText)
+                } else {
+                    val response = sendVoiceUseCase(audioFile, currentSessionId, _selectedLanguage.value)
+                    audioFile.delete()
+                    handleResponse(response, inputText = "[Voice input]")
+                }
             } catch (e: Exception) {
                 Log.e("ConversationVM", "Voice send failed", e)
                 _uiState.value = ConversationUiState.Error(

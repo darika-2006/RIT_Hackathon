@@ -108,3 +108,16 @@ data class TransactionDto(
     @SerializedName("date") val date: String = "",
     @SerializedName("status") val status: String = "COMPLETED"
 )
+
+/**
+ * Direct response from the Vernacular ASR Engine (/api/v1/transcribe)
+ */
+data class AsrResponseDto(
+    @SerializedName("session_id") val sessionId: String = "",
+    @SerializedName("text") val text: String = "",
+    @SerializedName("confidence") val confidence: Float = 0f,
+    @SerializedName("language") val language: String = "",
+    @SerializedName("audio_duration_ms") val audioDurationMs: Long = 0,
+    @SerializedName("timestamp") val timestamp: String = ""
+)
+

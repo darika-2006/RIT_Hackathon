@@ -19,6 +19,7 @@ android {
 
         // Backend configuration — change BASE_URL to point to teammates' backend
         buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8000/\"")
+        buildConfigField("String", "ASR_BASE_URL", "\"http://10.0.2.2:8001/\"")
         buildConfigField("boolean", "DEMO_MODE", "true")
     }
 

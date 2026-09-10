@@ -20,8 +20,11 @@ import java.io.File
  * All network calls run on the calling coroutine dispatcher (IO expected from ViewModel).
  * Network errors are caught in the ViewModel and converted to [AgentResponse.Error].
  */
+import com.rit.voicebanking.data.remote.NetworkClient
+
 class RemoteBankingRepository(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val asrService: ApiService = NetworkClient.asrApiService
 ) : BankingRepository {
 
     override suspend fun sendVoice(
@@ -29,15 +32,34 @@ class RemoteBankingRepository(
         sessionId: String,
         language: Language
     ): AgentResponse {
+        val filePart = MultipartBody.Part.createFormData(
+            name = "file",
+            filename = audioFile.name,
+            body = audioFile.asRequestBody("audio/mp4".toMediaType())
+        )
+        val sessionPart = sessionId.toRequestBody("text/plain".toMediaType())
+        val langPart = language.code.toRequestBody("text/plain".toMediaType())
+
+        // 1. Transcribe audio with ASR engine
+        val asrResult = try {
+            asrService.transcribeAudio(filePart, langPart, sessionPart)
+        } catch (_: Exception) {
+            null
+        }
+
+        val transcribedText = asrResult?.text?.trim()
+        if (!transcribedText.isNullOrBlank()) {
+            // 2. Route transcribed text to agent intent processor
+            return sendText(transcribedText, sessionId, language)
+        }
+
+        // Fallback: direct conversation/voice endpoint
         val audioPart = MultipartBody.Part.createFormData(
             name = "audio",
             filename = audioFile.name,
-            body = audioFile.asRequestBody("audio/wav".toMediaType())
+            body = audioFile.asRequestBody("audio/mp4".toMediaType())
         )
-        val sessionPart = sessionId.toRequestBody("text/plain".toMediaType())
         val userIdPart = "demo_user".toRequestBody("text/plain".toMediaType())
-        val langPart = language.code.toRequestBody("text/plain".toMediaType())
-
         val dto = apiService.sendVoice(audioPart, sessionPart, userIdPart, langPart)
         return AgentResponseMapper.toDomain(dto)
     }

@@ -46,4 +46,13 @@ object NetworkClient {
             .build()
             .create(ApiService::class.java)
     }
+
+    val asrApiService: ApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.ASR_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
+    }
 }

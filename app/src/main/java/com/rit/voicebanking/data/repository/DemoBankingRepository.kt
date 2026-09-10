@@ -26,7 +26,16 @@ import java.io.File
  * 5. Confirmation
  * 6. Success
  */
-class DemoBankingRepository : BankingRepository {
+import com.rit.voicebanking.data.remote.ApiService
+import com.rit.voicebanking.data.remote.NetworkClient
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+
+class DemoBankingRepository(
+    private val asrService: ApiService = NetworkClient.asrApiService
+) : BankingRepository {
 
     private var turnCount = 0
     private var inLoanFlow = false
@@ -38,7 +47,25 @@ class DemoBankingRepository : BankingRepository {
         sessionId: String,
         language: Language
     ): AgentResponse {
-        delay(1500) // simulate ASR + processing time
+        val transcribedText = try {
+            val filePart = MultipartBody.Part.createFormData(
+                name = "file",
+                filename = audioFile.name,
+                body = audioFile.asRequestBody("audio/mp4".toMediaType())
+            )
+            val langPart = language.code.toRequestBody("text/plain".toMediaType())
+            val sessionPart = sessionId.toRequestBody("text/plain".toMediaType())
+            val asrDto = asrService.transcribeAudio(filePart, langPart, sessionPart)
+            asrDto.text.trim()
+        } catch (_: Exception) {
+            null
+        }
+
+        if (!transcribedText.isNullOrBlank()) {
+            return sendText(transcribedText, sessionId, language)
+        }
+
+        delay(1000) // fallback simulation
         return getNextDemoResponse(sessionId)
     }
 
@@ -52,10 +79,10 @@ class DemoBankingRepository : BankingRepository {
 
         return when {
             lowerText.contains("balance") || lowerText.contains("பணம்") ||
-                    lowerText.contains("शेष") -> getDemoBalance(sessionId)
+                    lowerText.contains("இருப்பு") || lowerText.contains("शेष") -> getDemoBalance(sessionId)
 
             lowerText.contains("transaction") || lowerText.contains("history") ||
-                    lowerText.contains("காட்டு") -> getDemoTransactions(sessionId)
+                    lowerText.contains("காட்டு") || lowerText.contains("பரிவர்த்தனை") -> getDemoTransactions(sessionId)
 
             lowerText.contains("loan") || lowerText.contains("கடன்") ||
                     lowerText.contains("ऋण") || lowerText.contains("mudra") -> {

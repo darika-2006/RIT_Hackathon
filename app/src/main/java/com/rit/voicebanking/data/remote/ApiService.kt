@@ -20,6 +20,17 @@ import retrofit2.http.*
 interface ApiService {
 
     /**
+     * Direct ASR call to transcribe recorded audio into text.
+     */
+    @Multipart
+    @POST("api/v1/transcribe")
+    suspend fun transcribeAudio(
+        @Part file: MultipartBody.Part,
+        @Part("language") language: RequestBody? = null,
+        @Part("session_id") sessionId: RequestBody? = null
+    ): AsrResponseDto
+
+    /**
      * Send recorded voice audio for ASR → agent processing.
      * The backend handles speech recognition — Android only sends raw audio.
      */

@@ -156,19 +156,12 @@ def list_languages():
     }
 
 # =====================================================================
-# 4. UNIVERSAL TRANSCRIBE ENDPOINT
+# 4. AUDIO TRANSCRIPTION HELPER
 # =====================================================================
-@app.post("/api/v1/transcribe", response_model=ASRResponseSchema)
-async def transcribe(
-    file: UploadFile = File(...),
-    language: Optional[str] = Form(
-        None,
-        description="Language code (e.g. 'ta' for Tamil, 'hi', 'te', 'en'), full name ('tamil'), or code-mixed alias ('tanglish', 'hinglish'). Leave blank or 'auto' for automatic detection."
-    ),
-    session_id: Optional[str] = Form(
-        None,
-        description="Optional session tracking ID. Leave blank to generate automatically."
-    )
+async def _transcribe_audio_payload(
+    upload_file: UploadFile,
+    language: Optional[str],
+    session_id: Optional[str]
 ):
     # Sanitize session_id (ignore Swagger placeholder 'string')
     if session_id and session_id.strip().lower() not in AUTO_DETECT_KEYWORDS:
@@ -176,7 +169,7 @@ async def transcribe(
     else:
         active_session_id = str(uuid.uuid4())
     
-    raw_bytes = await file.read()
+    raw_bytes = await upload_file.read()
     if len(raw_bytes) == 0:
         raise HTTPException(status_code=400, detail="Empty audio payload received")
 
@@ -209,13 +202,13 @@ async def transcribe(
             )
             whisper_lang = None
 
-    filename = file.filename if file.filename else "audio.webm"
+    filename = upload_file.filename if upload_file.filename else "audio.webm"
 
     try:
         logger.info(f"🎙️ Transcribing audio (raw param: '{language}' -> resolved Whisper lang: '{whisper_lang}')")
         
         create_kwargs = {
-            "file": (filename, raw_bytes, file.content_type or "audio/webm"),
+            "file": (filename, raw_bytes, upload_file.content_type or "audio/webm"),
             "model": "whisper-large-v3-turbo",
             "prompt": UNIVERSAL_BANKING_PROMPT,
             "response_format": "verbose_json"
@@ -246,14 +239,69 @@ async def transcribe(
         logger.error(f"API Call Failed for language '{language}': {e}")
         raise HTTPException(status_code=500, detail=f"ASR API Error: {str(e)}")
 
-    return ASRResponseSchema(
-        session_id=active_session_id,
-        text=transcribed_text,
-        confidence=confidence,
-        language=detected_lang,
-        audio_duration_ms=audio_duration_ms,
-        timestamp=datetime.now(timezone.utc).isoformat()
+    return {
+        "session_id": active_session_id,
+        "text": transcribed_text,
+        "confidence": confidence,
+        "language": detected_lang,
+        "audio_duration_ms": audio_duration_ms,
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+
+# =====================================================================
+# 5. UNIVERSAL TRANSCRIBE ENDPOINT
+# =====================================================================
+@app.post("/api/v1/transcribe", response_model=ASRResponseSchema)
+async def transcribe(
+    file: Optional[UploadFile] = File(None, description="Audio file payload (field 'file')"),
+    audio: Optional[UploadFile] = File(None, description="Alternative field 'audio'"),
+    language: Optional[str] = Form(
+        None,
+        description="Language code (e.g. 'ta' for Tamil, 'hi', 'te', 'en'), full name ('tamil'), or code-mixed alias ('tanglish', 'hinglish'). Leave blank or 'auto' for automatic detection."
+    ),
+    session_id: Optional[str] = Form(
+        None,
+        description="Optional session tracking ID. Leave blank to generate automatically."
     )
+):
+    upload_file = file or audio
+    if not upload_file:
+        raise HTTPException(status_code=400, detail="No audio file received. Please provide 'file' or 'audio' part.")
+
+    result = await _transcribe_audio_payload(upload_file, language, session_id)
+    return ASRResponseSchema(**result)
+
+# =====================================================================
+# 6. CONVERSATION VOICE ENDPOINT (Matches Android ApiService contract)
+# =====================================================================
+@app.post("/api/v1/conversation/voice")
+async def conversation_voice(
+    audio: Optional[UploadFile] = File(None),
+    file: Optional[UploadFile] = File(None),
+    session_id: Optional[str] = Form(None),
+    user_id: Optional[str] = Form(None),
+    language: Optional[str] = Form(None)
+):
+    upload_file = audio or file
+    if not upload_file:
+        raise HTTPException(status_code=400, detail="No audio file received in 'audio' or 'file' part.")
+
+    result = await _transcribe_audio_payload(upload_file, language, session_id)
+    
+    return {
+        "session_id": result["session_id"],
+        "response_type": "TEXT",
+        "text": result["text"],
+        "language": result["language"],
+        "requires_confirmation": False,
+        "metadata": {
+            "user_id": user_id or "demo_user",
+            "transcription": result["text"],
+            "confidence": result["confidence"],
+            "audio_duration_ms": result["audio_duration_ms"],
+            "timestamp": result["timestamp"]
+        }
+    }
 
 if __name__ == "__main__":
     import uvicorn

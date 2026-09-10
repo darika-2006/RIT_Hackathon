@@ -26,3 +26,12 @@ ENV/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Gradle & Android Build Artifacts
+.gradle/
+build/
+app/build/
+.kotlin/
+*.bin
+*.lock
+
