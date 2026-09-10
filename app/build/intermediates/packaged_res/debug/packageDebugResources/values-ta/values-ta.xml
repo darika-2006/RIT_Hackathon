@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">குரல் வங்கி</string>
+    <string name="application_progress">விண்ணப்ப முன்னேற்றம்</string>
+    <string name="balance">இருப்பு</string>
+    <string name="balance_label">கிடைக்கக்கூடிய இருப்பு</string>
+    <string name="cancel">ரத்து செய்</string>
+    <string name="confirm">உறுதிப்படுத்து</string>
+    <string name="confirm_request">கோரிக்கையை உறுதிப்படுத்தவும்</string>
+    <string name="continue_btn">தொடரவும்</string>
+    <string name="demo_mode_label">டெமோ முறை</string>
+    <string name="deposit">வைப்பு</string>
+    <string name="details_collected">விவரங்கள் சேகரிக்கப்பட்டன</string>
+    <string name="error_connection">வங்கி சேவையகத்தை அணுக முடியவில்லை.</string>
+    <string name="error_generic">அந்த கோரிக்கையை நிறைவேற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="error_no_action">எந்த நடவடிக்கையும் எடுக்கப்படவில்லை.</string>
+    <string name="error_timeout">உங்கள் இணைப்பு மெதுவாக உள்ளது. மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="go_home">முகப்புக்கு செல்</string>
+    <string name="home_prompt">நீங்கள் என்ன செய்ய விரும்புகிறீர்கள்?</string>
+    <string name="information_mismatch">தகவல் பொருத்தமின்மை</string>
+    <string name="into_account">கணக்கில்:</string>
+    <string name="loans">கடன்</string>
+    <string name="no_transactions">பரிவர்த்தனைகள் இல்லை.</string>
+    <string name="questions_left">கேள்விகள் மீதம்</string>
+    <string name="quick_actions">விரைவு செயல்கள்</string>
+    <string name="recent_transactions">சமீபத்திய பரிவர்த்தனைகள்</string>
+    <string name="retry">மீண்டும் முயற்சிக்கவும்</string>
+    <string name="review">மதிப்பாய்வு</string>
+    <string name="select_language">உங்கள் மொழியை தேர்ந்தெடுக்கவும்</string>
+    <string name="speak_again">மீண்டும் பேசுங்கள்</string>
+    <string name="start_talking">பேசத் தொடங்குங்கள்</string>
+    <string name="status_processing">உங்கள் கோரிக்கையை செயலாக்குகிறேன்…</string>
+    <string name="status_recording">கேட்கிறேன்… நிறுத்த தட்டவும்</string>
+    <string name="status_tap_speak">மைக்கை தட்டி பேசுங்கள்</string>
+    <string name="transactions">பரிவர்த்தனைகள்</string>
+    <string name="updated_just_now">இப்போதுதான் புதுப்பிக்கப்பட்டது</string>
+    <string name="welcome_subtitle">இயல்பாகப் பேசுங்கள்.\nஉங்கள் மொழியில் வங்கி உதவி பெறுங்கள்.</string>
+</resources>

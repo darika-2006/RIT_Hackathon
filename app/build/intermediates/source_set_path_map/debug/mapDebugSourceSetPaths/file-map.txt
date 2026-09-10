@@ -1,0 +1,58 @@
+com.rit.voicebanking.app-lifecycle-viewmodel-ktx-2.8.7-0 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\01171cb92f2d92a8a3cee5dfdc170ae3\workspace\transformed\lifecycle-viewmodel-ktx-2.8.7\res
+com.rit.voicebanking.app-activity-ktx-1.10.1-1 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\05e100bf76fd89660b1561982f655a55\workspace\transformed\activity-ktx-1.10.1\res
+com.rit.voicebanking.app-lifecycle-viewmodel-savedstate-2.8.7-2 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\0811912be6d0671822813cd6e80b8faa\workspace\transformed\lifecycle-viewmodel-savedstate-2.8.7\res
+com.rit.voicebanking.app-graphics-path-1.0.1-3 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\08beba766e896d458a3ae1d5020d224c\workspace\transformed\graphics-path-1.0.1\res
+com.rit.voicebanking.app-core-viewtree-1.0.0-4 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\0f4bd4d605f61b6a361fdc720409d368\workspace\transformed\core-viewtree-1.0.0\res
+com.rit.voicebanking.app-ui-test-manifest-1.7.2-5 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\1686ded8b2ec353aa88a59f8f3744817\workspace\transformed\ui-test-manifest-1.7.2\res
+com.rit.voicebanking.app-customview-poolingcontainer-1.0.0-6 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\1b992d9a6f5f77eff711894a9f52d216\workspace\transformed\customview-poolingcontainer-1.0.0\res
+com.rit.voicebanking.app-navigation-runtime-ktx-2.8.9-7 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\1d6d1d75efcb7bd24f35e29a06c0fbed\workspace\transformed\navigation-runtime-ktx-2.8.9\res
+com.rit.voicebanking.app-material3-release-8 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\265f2e22a9e51ad1c19786b0ec652fea\workspace\transformed\material3-release\res
+com.rit.voicebanking.app-lifecycle-runtime-ktx-release-9 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\27890fab4b76b8068b15383211080abf\workspace\transformed\lifecycle-runtime-ktx-release\res
+com.rit.voicebanking.app-material-icons-core-release-10 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\2d32b3a4e4335ac238aee8983b9bcf01\workspace\transformed\material-icons-core-release\res
+com.rit.voicebanking.app-ui-geometry-release-11 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\2d652f2ae3cebcc9f472f37b51572f69\workspace\transformed\ui-geometry-release\res
+com.rit.voicebanking.app-lifecycle-process-2.8.7-12 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\3853ac056ebbb1c5d1730036ff5b53ef\workspace\transformed\lifecycle-process-2.8.7\res
+com.rit.voicebanking.app-animation-release-13 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\3ce234000513bac6536e18e07d9156df\workspace\transformed\animation-release\res
+com.rit.voicebanking.app-lifecycle-livedata-core-2.8.7-14 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\42e1f11f3823f3192cfe75c42c63ca52\workspace\transformed\lifecycle-livedata-core-2.8.7\res
+com.rit.voicebanking.app-navigation-compose-2.8.9-15 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\4b273e4a4ea457e3c14d3bf80a007f0a\workspace\transformed\navigation-compose-2.8.9\res
+com.rit.voicebanking.app-lifecycle-viewmodel-release-16 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\4c7cffa06a81269f2234b2df9952da81\workspace\transformed\lifecycle-viewmodel-release\res
+com.rit.voicebanking.app-material-release-17 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\5aa4d977d2423dee498de9c444a8d99f\workspace\transformed\material-release\res
+com.rit.voicebanking.app-savedstate-1.2.1-18 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\5b6218153c10f202d8b1f7ecd616a26f\workspace\transformed\savedstate-1.2.1\res
+com.rit.voicebanking.app-runtime-release-19 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\5e73627c7aa793d9fbda00ea3c6cd647\workspace\transformed\runtime-release\res
+com.rit.voicebanking.app-ui-tooling-data-release-20 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\60655da4f7bd59838ef087a0eec27339\workspace\transformed\ui-tooling-data-release\res
+com.rit.voicebanking.app-animation-core-release-21 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\6e102124cb4f89f1d4f7642af0d2d31c\workspace\transformed\animation-core-release\res
+com.rit.voicebanking.app-emoji2-1.3.0-22 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\747af3615362388f66dfb2c740f3aad9\workspace\transformed\emoji2-1.3.0\res
+com.rit.voicebanking.app-ui-tooling-preview-release-23 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\7c6daf027312b048dc0be7a866ce385a\workspace\transformed\ui-tooling-preview-release\res
+com.rit.voicebanking.app-annotation-experimental-1.4.1-24 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\7d3aa0dbc17428b92655eddd5fa1d90d\workspace\transformed\annotation-experimental-1.4.1\res
+com.rit.voicebanking.app-ui-graphics-release-25 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\7fd04c7b8cde277612b086708aaa69e8\workspace\transformed\ui-graphics-release\res
+com.rit.voicebanking.app-runtime-saveable-release-26 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\831b4568ed49a5171585017b815d1cb8\workspace\transformed\runtime-saveable-release\res
+com.rit.voicebanking.app-navigation-runtime-2.8.9-27 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\854a003529b1df64cba6dd631cfff782\workspace\transformed\navigation-runtime-2.8.9\res
+com.rit.voicebanking.app-activity-compose-1.10.1-28 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\8b89c5f07618c8a199f4dbb90b545b8c\workspace\transformed\activity-compose-1.10.1\res
+com.rit.voicebanking.app-profileinstaller-1.4.0-29 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\98a8c908ed533e9c083437fb8ded80f1\workspace\transformed\profileinstaller-1.4.0\res
+com.rit.voicebanking.app-navigation-common-2.8.9-30 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\993161096b7fe64a3f3a241c994bde9a\workspace\transformed\navigation-common-2.8.9\res
+com.rit.voicebanking.app-savedstate-ktx-1.2.1-31 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\9bfcb96fc4612f228cf538370be27be8\workspace\transformed\savedstate-ktx-1.2.1\res
+com.rit.voicebanking.app-lifecycle-runtime-release-32 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\b27b97f9684e4ed93145f09233e4faef\workspace\transformed\lifecycle-runtime-release\res
+com.rit.voicebanking.app-core-runtime-2.2.0-33 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\bb58bbcd3941a237c70f0d5167d7e734\workspace\transformed\core-runtime-2.2.0\res
+com.rit.voicebanking.app-ui-text-release-34 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\bcb38b9c3337a2aa6cea584f6919a173\workspace\transformed\ui-text-release\res
+com.rit.voicebanking.app-ui-util-release-35 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\bdd331cddd69d93e8263a6d7f06d2a33\workspace\transformed\ui-util-release\res
+com.rit.voicebanking.app-core-ktx-1.16.0-36 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\c18df1d8ef0c5605f064a9afde733a60\workspace\transformed\core-ktx-1.16.0\res
+com.rit.voicebanking.app-material-icons-extended-release-37 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\c3f289eec84d18a562b2fc4486b2ced7\workspace\transformed\material-icons-extended-release\res
+com.rit.voicebanking.app-core-1.16.0-38 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\c81ad8a03dda6edb72cdf9cfdefebedb\workspace\transformed\core-1.16.0\res
+com.rit.voicebanking.app-tracing-1.2.0-39 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\d17109a865aa142a63f7f61ec0acf6b8\workspace\transformed\tracing-1.2.0\res
+com.rit.voicebanking.app-startup-runtime-1.1.1-40 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\d19d8b873cf690e75ddc87b0d36ebd96\workspace\transformed\startup-runtime-1.1.1\res
+com.rit.voicebanking.app-lifecycle-runtime-compose-release-41 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\d2f1042b735b14ce85118e0b8639e4e7\workspace\transformed\lifecycle-runtime-compose-release\res
+com.rit.voicebanking.app-ui-unit-release-42 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\dbe77316343eebc048c4561bc942de7e\workspace\transformed\ui-unit-release\res
+com.rit.voicebanking.app-ui-release-43 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\dfa53a2338eb37d34baa5bf5c3853c46\workspace\transformed\ui-release\res
+com.rit.voicebanking.app-lifecycle-viewmodel-compose-release-44 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\e0cad5adcfaa04286e43832754761a33\workspace\transformed\lifecycle-viewmodel-compose-release\res
+com.rit.voicebanking.app-ui-tooling-release-45 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\e306b93ef3e7d721b50793526bb7062f\workspace\transformed\ui-tooling-release\res
+com.rit.voicebanking.app-foundation-release-46 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\ec7a6d49e6e67fb8ab824db28f669046\workspace\transformed\foundation-release\res
+com.rit.voicebanking.app-material-ripple-release-47 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\f0eea828ca14096b3e561d3791c42188\workspace\transformed\material-ripple-release\res
+com.rit.voicebanking.app-navigation-common-ktx-2.8.9-48 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\f7c45d0e37dd8a142dccc2485dbd8931\workspace\transformed\navigation-common-ktx-2.8.9\res
+com.rit.voicebanking.app-foundation-layout-release-49 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\fb6002243345cfe3bd341977db968989\workspace\transformed\foundation-layout-release\res
+com.rit.voicebanking.app-activity-1.10.1-50 C:\Users\Sabari\.gradle\caches\9.3.0\transforms\fef79bda3997218ea79f3d28c6f97a3f\workspace\transformed\activity-1.10.1\res
+com.rit.voicebanking.app-pngs-51 D:\Hackathons\RIT - INFINIX\VoiceBankingApp\app\build\generated\res\pngs\debug
+com.rit.voicebanking.app-resValues-52 D:\Hackathons\RIT - INFINIX\VoiceBankingApp\app\build\generated\res\resValues\debug
+com.rit.voicebanking.app-packageDebugResources-53 D:\Hackathons\RIT - INFINIX\VoiceBankingApp\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.rit.voicebanking.app-packageDebugResources-54 D:\Hackathons\RIT - INFINIX\VoiceBankingApp\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.rit.voicebanking.app-debug-55 D:\Hackathons\RIT - INFINIX\VoiceBankingApp\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.rit.voicebanking.app-debug-56 D:\Hackathons\RIT - INFINIX\VoiceBankingApp\app\src\debug\res
+com.rit.voicebanking.app-main-57 D:\Hackathons\RIT - INFINIX\VoiceBankingApp\app\src\main\res
