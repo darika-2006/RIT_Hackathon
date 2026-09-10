@@ -51,10 +51,14 @@ def test_cross_document_conflict_detection():
     )
     conflicts = detect_conflicts(customer)
     assert len(conflicts) == 1
-    assert conflicts[0].type == "name_mismatch"
-    assert "KAVITHA R" in conflicts[0].message_ta
-    assert "KAVITHA RAJENDRAN" in conflicts[0].message_ta
-    assert conflicts[0].severity == "high"
+    c = conflicts[0]
+    c_type = c.type if hasattr(c, "type") else c.get("type")
+    c_msg = c.message_ta if hasattr(c, "message_ta") else c.get("message_ta")
+    c_sev = c.severity if hasattr(c, "severity") else c.get("severity")
+    assert c_type == "name_mismatch"
+    assert "KAVITHA R" in c_msg
+    assert "KAVITHA RAJENDRAN" in c_msg
+    assert c_sev == "high"
 
 
 def test_balance_inquiry_turn():

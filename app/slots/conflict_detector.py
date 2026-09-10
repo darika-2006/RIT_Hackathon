@@ -1,17 +1,16 @@
 import logging
 from typing import List, Dict, Any
-from app.schemas import ConflictAlert, Customer360
+from app.schemas import Customer360
 
 logger = logging.getLogger(__name__)
 
-# Try importing fuzzywuzzy or RapidFuzz
+# Import fuzzy matching library
 try:
     from fuzzywuzzy import fuzz
 except ImportError:
     try:
         from rapidfuzz import fuzz
     except ImportError:
-        # Basic fallback matching if library unavailable
         class SimpleFuzz:
             @staticmethod
             def token_sort_ratio(s1: str, s2: str) -> int:
@@ -24,31 +23,28 @@ except ImportError:
         fuzz = SimpleFuzz()
 
 
-def detect_conflicts(customer: Customer360) -> List[ConflictAlert]:
+def detect_conflicts(customer_360: Customer360) -> List[Dict[str, Any]]:
     """
-    Proactive cross-document conflict detection across customer vault.
-    Compares PAN Name vs Aadhaar Full Name using fuzzy string matching.
-    If similarity < 90%, generates a conflict alert.
+    Proactive cross-document conflict detection.
+    Compares PAN Name vs Aadhaar Name using fuzzy string matching.
+    If similarity < 90%, returns conflict dictionary alerts.
     """
-    alerts: List[ConflictAlert] = []
+    conflicts: List[Dict[str, Any]] = []
 
-    aadhaar_name = customer.full_name.strip() if customer.full_name else ""
-    pan_name = customer.pan_name.strip() if customer.pan_name else ""
+    aadhaar_name = customer_360.full_name.strip() if customer_360.full_name else ""
+    pan_name = customer_360.pan_name.strip() if customer_360.pan_name else ""
 
     if aadhaar_name and pan_name:
         similarity = fuzz.token_sort_ratio(aadhaar_name.upper(), pan_name.upper())
-        logger.info(f"Cross-doc name match: '{pan_name}' vs '{aadhaar_name}' -> Similarity: {similarity}%")
+        logger.info(f"Fuzzy Name Match: PAN '{pan_name}' vs Aadhaar '{aadhaar_name}' -> Ratio: {similarity}%")
         
         if similarity < 90:
-            msg_ta = f"PAN பெயர் '{pan_name}' மற்றும் ஆதார் பெயர் '{aadhaar_name}' பொருந்தவில்லை."
-            msg_en = f"PAN Name '{pan_name}' and Aadhaar Name '{aadhaar_name}' do not match ({similarity}% match)."
-            alerts.append(
-                ConflictAlert(
-                    type="name_mismatch",
-                    message_ta=msg_ta,
-                    message_en=msg_en,
-                    severity="high"
-                )
-            )
+            conflicts.append({
+                "type": "name_mismatch",
+                "severity": "high",
+                "message_ta": f"PAN பெயர் '{pan_name}' மற்றும் ஆதார் பெயர் '{aadhaar_name}' பொருந்தவில்லை. வங்கி நிராகரிக்கலாம்.",
+                "message_en": f"PAN Name '{pan_name}' and Aadhaar Name '{aadhaar_name}' do not match ({similarity}% match).",
+                "similarity_score": similarity
+            })
 
-    return alerts
+    return conflicts

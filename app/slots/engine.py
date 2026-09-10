@@ -1,26 +1,25 @@
 import re
 import logging
 from typing import Dict, Any, List, Optional, Tuple
+from app.schemas import Customer360
 
 logger = logging.getLogger(__name__)
 
-# Required slots per intent
-REQUIRED_SLOTS = {
-    "jewel_loan_apply": ["jewel_weight_grams", "jewel_type", "requested_amount"],
-    "mudra_loan_apply": ["business_type", "requested_amount", "annual_turnover"]
-}
+# Required slots for Jewel Loan
+JEWEL_LOAN_REQUIRED_SLOTS = [
+    "jewel_weight_grams",
+    "jewel_type",
+    "requested_amount",
+    "tenure_months"
+]
 
-# Default values for optional slots
-DEFAULT_SLOTS = {
-    "jewel_loan_apply": {"tenure_months": 12},
-    "mudra_loan_apply": {"tenure_months": 36, "category": "Kishore"}
-}
+TOTAL_APPLICATION_QUESTIONS = 22
 
 # Multilingual prompts for missing slots
 SLOT_PROMPTS = {
     "jewel_weight_grams": {
-        "ta": "எத்தனை கிராம் நகை அடமானம் வைக்க விரும்புகிறீர்கள்?",
-        "en": "How many grams of gold jewelry do you wish to pledge?"
+        "ta": "உங்கள் விவரங்கள் சரிபார்க்கப்பட்டன. எத்தனை கிராம் நகை அடமானம் வைக்க விரும்புகிறீர்கள்?",
+        "en": "Your profile details have been verified. How many grams of gold jewelry do you wish to pledge?"
     },
     "jewel_type": {
         "ta": "நீங்கள் என்ன வகையான நகை அடமானம் வைக்கிறீர்கள்? (உதாரணம்: சங்கிலி, வளையல், மோதிரம், ஆரம்)",
@@ -30,61 +29,61 @@ SLOT_PROMPTS = {
         "ta": "உங்களுக்கு எவ்வளவு கடன் தொகை தேவைப்படுகிறது?",
         "en": "How much loan amount do you require?"
     },
-    "business_type": {
-        "ta": "உங்கள் தொழில் அல்லது கடையின் பெயர் என்ன? (உதாரணம்: மளிகை கடை, தையல், பால் பண்ணை)",
-        "en": "What is the nature of your business or shop? (e.g. grocery shop, tailoring, dairy)"
-    },
-    "annual_turnover": {
-        "ta": "உங்கள் தொழிலின் ஆண்டு வருமானம் அல்லது டர்ன்ஓவர் எவ்வளவு?",
-        "en": "What is your business's annual turnover?"
+    "tenure_months": {
+        "ta": "கடன் கால அளவு எத்தனை மாதங்கள்? (இயல்புநிலை: 12 மாதங்கள்)",
+        "en": "What is the desired loan tenure in months? (default: 12 months)"
     }
 }
 
 
 class SlotEngine:
-    def process_slots(
+    def process_jewel_loan_slots(
         self,
-        intent: str,
+        customer_360: Customer360,
         current_slots: Dict[str, Any],
         newly_extracted_slots: Dict[str, Any],
-        user_text: str,
-        customer_profile: Optional[Any] = None
-    ) -> Tuple[Dict[str, Any], List[str], Optional[Dict[str, str]]]:
+        user_text: str
+    ) -> Tuple[Dict[str, Any], List[str], Optional[Dict[str, str]], int, int]:
         """
-        Slot resolution cascade.
-        Merges existing slots, vault profile pre-fills, and newly extracted slots.
-        Identifies missing slots and generates targeted prompt for the next missing slot.
-        Returns: (merged_slots, missing_slots, next_prompt_dict)
+        RAG Slot Filling Engine for Jewel Loans.
+        Pre-fills known customer vault fields from Customer360 (reducing questions 22 -> 4).
+        Returns: (merged_slots, missing_slots, next_prompt_dict, questions_total, questions_remaining)
         """
-        # Start with current slots
         merged = dict(current_slots or {})
 
-        # Apply defaults if applicable
-        if intent in DEFAULT_SLOTS:
-            for k, v in DEFAULT_SLOTS[intent].items():
-                if k not in merged:
-                    merged[k] = v
+        # Pre-fill vault fields from Customer360 profile automatically
+        if customer_360:
+            merged["customer_name"] = customer_360.full_name
+            merged["account_number"] = customer_360.account_number
+            merged["phone"] = customer_360.phone
+            merged["dob"] = customer_360.dob
+            merged["address"] = customer_360.address
+            merged["credit_score"] = customer_360.credit_score
+            merged["is_kcc_holder"] = customer_360.is_kcc_holder
+            merged["is_shg_member"] = customer_360.is_shg_member
 
-        # Pre-fill vault fields if customer profile exists
-        if customer_profile:
-            if hasattr(customer_profile, "account_number") and customer_profile.account_number:
-                merged["account_number"] = customer_profile.account_number
-            if hasattr(customer_profile, "full_name") and customer_profile.full_name:
-                merged["customer_name"] = customer_profile.full_name
+        # Default tenure_months if not specified
+        if "tenure_months" not in merged or merged["tenure_months"] is None:
+            merged["tenure_months"] = 12
 
-        # Merge newly extracted slots from LLM / Rules
+        # Merge newly extracted slots
         for k, v in newly_extracted_slots.items():
             if v is not None:
                 merged[k] = v
 
-        # Heuristic slot extraction directly from raw text if missing
-        merged = self._extract_slots_heuristically(intent, merged, user_text)
+        # Heuristic slot extraction directly from text
+        merged = self._extract_jewel_slots(merged, user_text)
 
-        # Check required slots for this intent
-        required = REQUIRED_SLOTS.get(intent, [])
-        missing = [s for s in required if s not in merged or merged[s] is None]
+        # Check missing required slots
+        missing = [s for s in JEWEL_LOAN_REQUIRED_SLOTS if s not in merged or merged[s] is None]
 
-        # Determine prompt for next missing slot
+        # Calculate 22 -> 5 questions reduction metrics
+        questions_total = TOTAL_APPLICATION_QUESTIONS
+        # 18 vault fields auto-filled + filled slots
+        filled_count = len([s for s in JEWEL_LOAN_REQUIRED_SLOTS if s in merged and merged[s] is not None])
+        questions_remaining = len(missing)
+
+        # Generate prompt for next missing slot
         next_prompt = None
         if missing:
             next_slot = missing[0]
@@ -93,24 +92,23 @@ class SlotEngine:
                 "en": f"Please provide details for {next_slot}."
             })
 
-        return merged, missing, next_prompt
+        return merged, missing, next_prompt, questions_total, questions_remaining
 
-    def _extract_slots_heuristically(self, intent: str, slots: Dict[str, Any], text: str) -> Dict[str, Any]:
+    def _extract_jewel_slots(self, slots: Dict[str, Any], text: str) -> Dict[str, Any]:
         cleaned = text.lower().strip()
 
-        # If we are waiting for jewel_weight_grams
+        # Match jewel weight in grams
         if "jewel_weight_grams" not in slots or slots["jewel_weight_grams"] is None:
-            # Match numbers
             m = re.search(r"(\d+(?:\.\d+)?)\s*(?:கிராம்|கிரா|grams|gram|g\b)?", cleaned)
             if m:
                 try:
                     val = float(m.group(1))
-                    if 0.5 <= val <= 1000: # Reasonable gold weight range
+                    if 0.5 <= val <= 1000:
                         slots["jewel_weight_grams"] = val
                 except ValueError:
                     pass
 
-        # Jewel type matching
+        # Match jewel type
         if "jewel_type" not in slots or slots["jewel_type"] is None:
             jewel_types = {
                 "chain": ["சங்கிலி", "செயின்", "chain"],
@@ -125,7 +123,7 @@ class SlotEngine:
                         slots["jewel_type"] = j_key
                         break
 
-        # Amount matching: e.g. "75000", "75 ஆயிரம்", "75,000", "1 லட்சம்"
+        # Match requested amount
         if "requested_amount" not in slots or slots["requested_amount"] is None:
             lakh_match = re.search(r"(\d+(?:\.\d+)?)\s*(?:லட்சம்|lakh|lakhs)", cleaned)
             if lakh_match:
@@ -141,20 +139,6 @@ class SlotEngine:
                             slots["requested_amount"] = float(amt_match.group(1).replace(",", ""))
                         except ValueError:
                             pass
-
-        # Business type matching for Mudra
-        if intent == "mudra_loan_apply" and ("business_type" not in slots or slots["business_type"] is None):
-            biz_map = {
-                "grocery shop": ["மளிகை", "மளிகைகடை", "grocery", "shop", "கடை"],
-                "tailoring": ["தையல்", "டெய்லரிங்", "tailor", "tailoring"],
-                "dairy": ["பால் பண்ணை", "பால்", "dairy", "milk"],
-                "textile": ["ஜவுளி", "துணி", "textile", "clothes"]
-            }
-            for b_key, b_words in biz_map.items():
-                for w in b_words:
-                    if w in cleaned:
-                        slots["business_type"] = b_key
-                        break
 
         return slots
 

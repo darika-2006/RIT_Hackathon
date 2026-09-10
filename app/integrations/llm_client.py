@@ -39,7 +39,7 @@ Return strictly valid JSON with no markdown block or extra text:
 
 class LLMClient:
     def __init__(self):
-        self.timeout = 2.5
+        self.timeout = 15.0
 
     async def classify_intent(self, text: str) -> Optional[Tuple[str, float, Dict[str, Any]]]:
         """
@@ -88,8 +88,7 @@ class LLMClient:
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": user_text}
                 ],
-                "temperature": 0.1,
-                "response_format": {"type": "json_object"}
+                "temperature": 0.1
             }
             async with httpx.AsyncClient(timeout=self.timeout) as client:
                 resp = await client.post(endpoint, json=payload)
@@ -97,6 +96,8 @@ class LLMClient:
                     data = resp.json()
                     content = data["choices"][0]["message"]["content"]
                     return self._parse_json_response(content)
+                else:
+                    logger.debug(f"Ollama call returned HTTP {resp.status_code}: {resp.text[:100]}")
         except Exception as e:
             logger.debug(f"Ollama call to {url} failed: {e}")
         return None

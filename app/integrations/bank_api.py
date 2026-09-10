@@ -8,6 +8,14 @@ from app.schemas import Customer360, AuditLogPayload
 
 logger = logging.getLogger(__name__)
 
+
+class BankDataError(Exception):
+    """Custom exception raised when backend bank API or DB access fails unexpectedly"""
+    def __init__(self, message: str, original_error: Optional[Exception] = None):
+        super().__init__(message)
+        self.message = message
+        self.original_error = original_error
+
 DB_CONFIG = {
     "dbname": "RIT",
     "user": "postgres",
