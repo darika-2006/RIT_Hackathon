@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Voice Banking</string>
+    <string name="welcome_subtitle">Speak naturally.\nGet banking help in your language.</string>
+    <string name="start_talking">Start Talking</string>
+    <string name="select_language">Select your language</string>
+
+    <string name="home_prompt">What would you like to do?</string>
+    <string name="status_tap_speak">Tap the mic and speak</string>
+    <string name="status_recording">Listening… tap to stop</string>
+    <string name="status_processing">Processing your request…</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="retry">Try Again</string>
+    <string name="go_home">Go Home</string>
+    <string name="speak_again">Speak Again</string>
+
+    <string name="balance_label">Available Balance</string>
+    <string name="updated_just_now">Updated just now</string>
+
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="no_transactions">No transactions found.</string>
+
+    <string name="confirm_request">Confirm Request</string>
+    <string name="into_account">Into:</string>
+
+    <string name="information_mismatch">Information Mismatch</string>
+    <string name="review">Review</string>
+    <string name="continue_btn">Continue</string>
+
+    <string name="application_progress">Application Progress</string>
+    <string name="details_collected">details collected</string>
+    <string name="questions_left">questions left</string>
+
+    <string name="quick_actions">Quick Actions</string>
+    <string name="balance">Balance</string>
+    <string name="transactions">Transactions</string>
+    <string name="loans">Loans</string>
+    <string name="deposit">Deposit</string>
+
+    <string name="demo_mode_label">DEMO MODE</string>
+    <string name="error_generic">I couldn\'t complete that request. Please try again.</string>
+    <string name="error_connection">Cannot reach the banking server. Please check your connection.</string>
+    <string name="error_timeout">Your connection seems slow. Please try again.</string>
+    <string name="error_no_action">No action was taken.</string>
+</resources>

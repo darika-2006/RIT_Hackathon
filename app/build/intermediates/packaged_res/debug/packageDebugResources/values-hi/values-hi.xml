@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">वॉइस बैंकिंग</string>
+    <string name="application_progress">आवेदन की प्रगति</string>
+    <string name="balance">शेष राशि</string>
+    <string name="balance_label">उपलब्ध शेष</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="confirm">पुष्टि करें</string>
+    <string name="confirm_request">अनुरोध की पुष्टि करें</string>
+    <string name="continue_btn">जारी रखें</string>
+    <string name="demo_mode_label">डेमो मोड</string>
+    <string name="deposit">जमा</string>
+    <string name="details_collected">विवरण एकत्रित</string>
+    <string name="error_connection">बैंकिंग सर्वर तक पहुंच नहीं हो सका।</string>
+    <string name="error_generic">वह अनुरोध पूरा नहीं हो सका। कृपया फिर से कोशिश करें।</string>
+    <string name="error_no_action">कोई कार्रवाई नहीं की गई।</string>
+    <string name="error_timeout">आपका कनेक्शन धीमा है। कृपया फिर से कोशिश करें।</string>
+    <string name="go_home">होम पर जाएं</string>
+    <string name="home_prompt">आप क्या करना चाहते हैं?</string>
+    <string name="information_mismatch">जानकारी बेमेल</string>
+    <string name="into_account">खाते में:</string>
+    <string name="loans">ऋण</string>
+    <string name="no_transactions">कोई लेनदेन नहीं मिला।</string>
+    <string name="questions_left">प्रश्न बाकी</string>
+    <string name="quick_actions">त्वरित क्रियाएं</string>
+    <string name="recent_transactions">हाल के लेनदेन</string>
+    <string name="retry">फिर कोशिश करें</string>
+    <string name="review">समीक्षा करें</string>
+    <string name="select_language">अपनी भाषा चुनें</string>
+    <string name="speak_again">फिर से बोलें</string>
+    <string name="start_talking">बात शुरू करें</string>
+    <string name="status_processing">आपका अनुरोध संसाधित हो रहा है…</string>
+    <string name="status_recording">सुन रहा हूँ… रोकने के लिए टैप करें</string>
+    <string name="status_tap_speak">माइक टैप करें और बोलें</string>
+    <string name="transactions">लेनदेन</string>
+    <string name="updated_just_now">अभी अपडेट किया गया</string>
+    <string name="welcome_subtitle">स्वाभाविक रूप से बोलें।\nअपनी भाषा में बैंकिंग सहायता पाएं।</string>
+</resources>
