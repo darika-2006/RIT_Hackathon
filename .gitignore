@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Audio test files
+*.mp3
+*.wav
+*.ogg
+*.webm
+
+# OS files
+.DS_Store
+Thumbs.db
