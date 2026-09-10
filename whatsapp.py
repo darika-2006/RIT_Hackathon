@@ -11,8 +11,8 @@ app = FastAPI(title="BankPhoenix WhatsApp Gateway")
 # 1. TWILIO CONFIGURATION
 # ============================================================
 
-TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
-TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "")
+TWILIO_ACCOUNT_SID = "ACeb4e269e0ab55cbb4e8cea399e040dab"
+TWILIO_AUTH_TOKEN = "c83d207bef6518eabca9e6180de0a970"
 
 
 # ============================================================
