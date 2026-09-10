@@ -534,4 +534,18 @@ async def tts_endpoint(req: TTSRequest):
         audio_bytes, media_type = await synthesize_speech(req.text, req.language)
         return Response(content=audio_bytes, media_type=media_type)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/tts/synthesize")
+@app.get("/api/speak")
+async def tts_get_endpoint(text: str, language: str = "hi"):
+    if not text or not text.strip():
+        raise HTTPException(status_code=400, detail="Text cannot be empty")
+
+    try:
+        audio_bytes, media_type = await synthesize_speech(text, language)
+        return Response(content=audio_bytes, media_type=media_type)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
