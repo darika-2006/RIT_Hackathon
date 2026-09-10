@@ -522,30 +522,34 @@ def get_benefits(customer_id: str):
 class TTSRequest(BaseModel):
     text: str
     language: str = "hi"
+    engine: str = "onnx"  # Default to local model_int8.onnx
 
 
 @app.post("/api/tts/synthesize")
+@app.post("/api/tts/onnx")
 @app.post("/api/speak")
 async def tts_endpoint(req: TTSRequest):
     if not req.text or not req.text.strip():
         raise HTTPException(status_code=400, detail="Text cannot be empty")
 
     try:
-        audio_bytes, media_type = await synthesize_speech(req.text, req.language)
+        audio_bytes, media_type = await synthesize_speech(req.text, req.language, req.engine)
         return Response(content=audio_bytes, media_type=media_type)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/api/tts/synthesize")
+@app.get("/api/tts/onnx")
 @app.get("/api/speak")
-async def tts_get_endpoint(text: str, language: str = "hi"):
+async def tts_get_endpoint(text: str, language: str = "hi", engine: str = "onnx"):
     if not text or not text.strip():
         raise HTTPException(status_code=400, detail="Text cannot be empty")
 
     try:
-        audio_bytes, media_type = await synthesize_speech(text, language)
+        audio_bytes, media_type = await synthesize_speech(text, language, engine)
         return Response(content=audio_bytes, media_type=media_type)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
